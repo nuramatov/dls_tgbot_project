@@ -14,7 +14,12 @@ import asyncio
 import concurrent.futures
 from functools import partial
 
-from nst_model import NST
+
+import sys
+sys.path.insert(0, "./gan_model")
+sys.path.insert(0, "./nst_model")
+from nst import NST
+from gan import GAN
 
 API_TOKEN = None
 with open(".env", "r") as dotenvfile:
@@ -84,9 +89,28 @@ async def send_content(message: types.Message, state: FSMContext):
     await state.update_data(content_image=content_image)
     async with state.proxy() as data:
         if data["requested_model"] == "GAN":
-            # TODO: GAN
-            await message.reply("Sorry, GAN is not yet implemented.")
-            await cancel(message, state)
+            
+            await message.reply("GAN is running, please be patient.")
+            print('someone has started GAN')
+            async with state.proxy() as data:
+                
+                GAN_partial = partial(
+                    GAN,
+                    input_image=data["content_image"],
+                    max_size=256
+                )
+                
+                with concurrent.futures.ThreadPoolExecutor() as pool:
+                    result_image = await loop.run_in_executor(pool, GAN_partial)
+            result_bytes = BytesIO()
+            result_image.save(result_bytes, format="PNG")
+            # send the result
+            result_bytes.seek(0)
+            result_message = await message.reply_photo(result_bytes)
+            await Form.choose_model.set()
+            await result_message.reply("I hope you liked it.")
+
+
         elif data["requested_model"] == "NST":
             await Form.send_style.set()
             await message.reply("Send the style picture.")
@@ -105,9 +129,8 @@ async def send_style(message: types.Message, state: FSMContext):
     # send the message to notify user that NST has started
     header = "NST is running, please be patient."
     progress_message = await message.reply(header)
-
+    print('someone has started NST')
     # run NST and save result to bytes; update the progress_message to show progress bar
-    result_image = None
     async with state.proxy() as data:
         
         NST_partial = partial(
@@ -127,7 +150,7 @@ async def send_style(message: types.Message, state: FSMContext):
     result_bytes.seek(0)
     result_message = await message.reply_photo(result_bytes)
 
-    await state.finish()
+    await Form.choose_model.set()
     await result_message.reply("I hope you liked it.")
 
 
