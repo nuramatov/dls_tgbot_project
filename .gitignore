@@ -1,6 +1,6 @@
 
-# Created by https://www.toptal.com/developers/gitignore/api/jupyternotebook,python,macos,windows,linux
-# Edit at https://www.toptal.com/developers/gitignore?templates=jupyternotebook,python,macos,windows,linux
+# Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,jupyternotebook,linux,macos,windows,python,vim
+# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,jupyternotebook,linux,macos,windows,python,vim
 
 ### JupyterNotebook ###
 .ipynb_checkpoints
@@ -177,6 +177,35 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+### Vim ###
+# Swap
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+
+# Session
+Session.vim
+
+# Temporary
+.netrwhist
+# Auto-generated tag files
+tags
+# Persistent undo
+[._]*.un~
+
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+.history
+
 ### Windows ###
 # Windows thumbnail cache files
 Thumbs.db
@@ -202,4 +231,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.toptal.com/developers/gitignore/api/jupyternotebook,python,macos,windows,linux
+# End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,jupyternotebook,linux,macos,windows,python,vim
