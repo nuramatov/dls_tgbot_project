@@ -10,7 +10,7 @@ After you receive the image, you can choose the model again.
 https://arxiv.org/abs/1508.06576 - Neural Style Transfer  
 https://arxiv.org/abs/1703.10593 - CycleGAN
 ## Configuration
-Just create a .env file in the root folder with a single line:  
+Just create a .env file in the root folder with your token in the single line like this:  
 "0000000000:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 
 You may want to change the number of epochs per a NST request
